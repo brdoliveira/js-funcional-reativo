@@ -8,6 +8,19 @@ const simbolos = [
     '(',')',':'
 ]
 
+function agruparPalavrar(palavras){
+    return palavras.reduce((agrupamento, palavra) => {
+        const p = palavra.toLowerCase()
+        if(agrupamento[p]) {
+            agrupamento[p] += 1
+        } else {
+            agrupamento[p] = 1
+        }
+        return agrupamento
+    },{})
+
+}
+
 fn.lerDiretorio(caminho)
     .then(fn.elementosTerminadosCom('.srt'))
     .then(fn.lerArquivos)
@@ -20,4 +33,6 @@ fn.lerDiretorio(caminho)
     .then(fn.mesclarElementos)
     .then(fn.separarPor(' '))
     .then(fn.removerElementosSeVazio)
+    .then(fn.removerElementosSeApenasNumero)
+    .then(agruparPalavrar)
     .then(console.log)
