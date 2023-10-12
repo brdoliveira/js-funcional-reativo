@@ -89,7 +89,16 @@ function ordenarPorAtributoNumerico(attr, ordem='asc'){
   }
 }
 
+function composicao(...fns){
+  return function(valor){
+      return fns.reduce((acc, fn) => {
+          return fn(acc)
+      }, valor)
+  }
+}
+
 module.exports = {
+  composicao,
   lerDiretorio,
   lerArquivos,
   elementosTerminadosCom,
