@@ -2,6 +2,19 @@ const fs = require("fs");
 const path = require("path");
 const { Observable } = require("rxjs");
 
+function createPipeableOperator(operatorFn) {
+  return function (source) {
+    return Observable.create((subscriber) => {
+        const sub = operatorFn(subscriber)
+      source.subscribe({
+        next: sub, next,
+        error: sub.error || (e => subscriber.error(e)),
+        complete: sub.complete || (c => subscriber.complete(c))
+      });
+    });
+  };
+}
+
 function lerDiretorio(caminho) {
   return new Observable(subscriber => {
     try {
@@ -31,9 +44,13 @@ function lerArquivos(caminhos){
 }
 
 function elementosTerminadosCom(padraoTextual){
-    return function(array){
-      return array.filter(el => el.endsWith(padraoTextual))
-    }
+  return createPipeableOperator(subscriber => ({
+      next(texto){
+        if(texto.endsWith(padraoTextual)){
+          subscriber.next(texto)
+        }
+      }
+  }))
 }
 
 function removerElementosSeVazio(array){
