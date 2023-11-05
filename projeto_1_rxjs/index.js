@@ -11,7 +11,7 @@ const simbolos = [
 fn.lerDiretorio(caminho)
     .pipe(
         fn.elementosTerminadosCom('.srt'),
-        fn.lerArquivo
+        fn.lerArquivo()
     )
     .subscribe(console.log)
 
