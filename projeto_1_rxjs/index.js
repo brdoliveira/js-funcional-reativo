@@ -12,16 +12,12 @@ fn.lerDiretorio(caminho)
     .pipe(
         fn.elementosTerminadosCom('.srt'),
         fn.lerArquivo(),
-        fn.separarPor('\n')
+        fn.separarPor('\n'),
+        fn.removerElementosSeVazio()
     )
     .subscribe(console.log)
 
 // fn.lerDiretorio(caminho)
-//     .then(fn.elementosTerminadosCom('.srt'))
-//     .then(fn.lerArquivos)
-//     .then(fn.mesclarElementos)
-//     .then(fn.separarPor('\n'))
-//     .then(fn.removerElementosSeVazio)
 //     .then(fn.removerElementosSeIncluir('-->'))
 //     .then(fn.removerElementosSeApenasNumero)
 //     .then(fn.removerSimbolos(simbolos))
