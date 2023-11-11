@@ -1,5 +1,6 @@
 const path = require('path')
 const fn = require("./funcoes")
+const { toArray } = require('rxjs')
 
 const caminho = path.join(__dirname,'..', 'dados', 'legendas')
 const simbolos = [
@@ -18,7 +19,9 @@ fn.lerDiretorio(caminho)
         fn.removerSimbolos(simbolos),
         fn.separarPor(' '),
         fn.removerElementosSeVazio(),
-        fn.removerElementosSeApenasNumero()
+        fn.removerElementosSeApenasNumero(),
+        toArray(),
+        fn.agruparElementos()
     )
     .subscribe(console.log)
 
