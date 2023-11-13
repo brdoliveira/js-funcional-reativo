@@ -1,6 +1,7 @@
 const path = require('path')
 const fn = require("./funcoes")
-const { toArray } = require('rxjs')
+const _ = require('loadash')
+const { toArray, map } = require('rxjs')
 
 const caminho = path.join(__dirname,'..', 'dados', 'legendas')
 const simbolos = [
@@ -21,11 +22,7 @@ fn.lerDiretorio(caminho)
         fn.removerElementosSeVazio(),
         fn.removerElementosSeApenasNumero(),
         toArray(),
-        fn.agruparElementos()
+        fn.agruparElementos(),
+        map(array => _.sortBy(array, el => -el.qtde))
     )
     .subscribe(console.log)
-
-// fn.lerDiretorio(caminho)
-//     .then(fn.agruparElementos)
-//     .then(fn.ordenarPorAtributoNumerico('qtde','desc'))
-//     .then(console.log)
