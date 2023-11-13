@@ -28,13 +28,12 @@ function lerDiretorio(caminho) {
   });
 }
 
-function lerArquivo(caminho){
+function lerArquivo(){
   return createPipeableOperator(subscriber => ({
     next(caminho){
       try{
         const conteudo = fs.readFileSync(caminho, { encoding: 'utf-8'})
         subscriber.next(conteudo.toString())
-        subscriber.complete()
       } catch (e){
         subscriber.error()
       }
@@ -84,10 +83,6 @@ function removerSimbolos(simbolos){
   }))
 }
 
-function mesclarElementos(array) {
-  return array.join(' ')
-}
-
 function separarPor(simbolo){
   return createPipeableOperator(subscriber => ({
     next(texto){
@@ -113,14 +108,6 @@ function agruparElementos(){
   }))
 }
 
-function ordenarPorAtributoNumerico(attr, ordem='asc'){
-  return function(array){
-    const asc = (o1,o2) => o1[attr] - o2[attr]
-    const desc = (o1,o2) => o2[attr] - o1[attr]
-    return [...array].sort(ordem === 'asc' ? asc : desc)
-  }
-}
-
 module.exports = {
   lerDiretorio,
   lerArquivo,
@@ -128,8 +115,6 @@ module.exports = {
   removerElementosSeVazio,
   removerElementosSeApenasNumero,
   removerSimbolos,
-  mesclarElementos,
   separarPor,
   agruparElementos,
-  ordenarPorAtributoNumerico
 };
